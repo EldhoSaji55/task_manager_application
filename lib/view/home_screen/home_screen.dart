@@ -1,13 +1,31 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:task_manager_application/controller/Add_task_Controller/addtaskController.dart';
+import 'package:task_manager_application/main.dart';
 import 'package:task_manager_application/utils/constants/color_constants.dart';
 import 'package:task_manager_application/view/bottomNavigationBar/bottomNavigationBar.dart';
 import 'package:task_manager_application/view/global_widgets/overlappingCircleAvatarWidget.dart';
 import 'package:task_manager_application/view/home_screen/widgets/CompletedTaskWidget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) async {
+        await context.read<Addtaskcontroller>().initDb();
+      },
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,13 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:task_manager_application/controller/registrationController.dart/registrationController.dart';
+import 'package:task_manager_application/main.dart';
 import 'package:task_manager_application/utils/constants/color_constants.dart';
 import 'package:task_manager_application/utils/constants/image_constants.dart';
 import 'package:task_manager_application/view/bottomNavigationBar/bottomNavigationBar.dart';
 import 'package:task_manager_application/view/home_screen/home_screen.dart';
 import 'package:task_manager_application/view/registration_screen/registration_Screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) async {
+        await context.read<Registrationcontroller>().initDb();
+      },
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
