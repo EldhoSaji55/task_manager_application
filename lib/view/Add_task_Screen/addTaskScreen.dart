@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:task_manager_application/controller/Add_task_Controller/addtaskController.dart';
+import 'package:task_manager_application/main.dart';
 import 'package:task_manager_application/utils/constants/color_constants.dart';
 import 'package:task_manager_application/view/global_widgets/ClockWidget.dart';
 
@@ -16,6 +19,17 @@ class _AddtaskscreenState extends State<Addtaskscreen> {
   var startMin = 0;
   var endHour = 0;
   var endMin = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        context.read<Addtaskcontroller>().showalltasks();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     DateTime? _date;

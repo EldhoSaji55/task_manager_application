@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:task_manager_application/model/addtaskModel.dart';
 
 class Addtaskcontroller with ChangeNotifier {
   late Database database;
+  var storedtasks;
   Future initDb() async {
     database = await openDatabase("taskdb.db", version: 1,
         onCreate: (Database db, int version) async {
@@ -12,9 +16,21 @@ class Addtaskcontroller with ChangeNotifier {
     });
   }
 
-  AddTask() {
-    database.rawInsert(
-        'INSERT INTO Task(user_id, taskname, taskcategory, Date, startTime, endTime, description) VALUES(?, ?, ?, ?, ?, ?, ?)',
-        ['another name', 12345678, 3.1416]);
+  showalltasks() async {
+    storedtasks = await database.rawQuery('SELECT * FROM Task');
+    log(storedtasks.toString());
+  }
+
+  Future AddTask(Addtaskmodel taskmodel) async {
+    await database.rawInsert(
+        'INSERT INTO Task(taskname, taskcategory, Date, startTime, endTime, description) VALUES(?, ?, ?, ?, ?, ?)',
+        [
+          taskmodel.taskName,
+          taskmodel.taskcategory,
+          taskmodel.Date,
+          taskmodel.startTime,
+          taskmodel.endTime,
+          taskmodel.description
+        ]);
   }
 }
