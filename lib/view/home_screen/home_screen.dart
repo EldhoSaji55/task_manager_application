@@ -19,12 +19,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
+    super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
         await context.read<Addtaskcontroller>().initDb();
       },
     );
-    super.initState();
   }
 
   @override

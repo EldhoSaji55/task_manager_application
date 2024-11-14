@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager_application/controller/Add_task_Controller/addtaskController.dart';
 import 'package:task_manager_application/main.dart';
+import 'package:task_manager_application/model/addtaskModel.dart';
 import 'package:task_manager_application/utils/constants/color_constants.dart';
 import 'package:task_manager_application/view/global_widgets/ClockWidget.dart';
 
@@ -14,22 +15,26 @@ class Addtaskscreen extends StatefulWidget {
 }
 
 class _AddtaskscreenState extends State<Addtaskscreen> {
-  TextEditingController _dateController = TextEditingController();
-  var startHour = 0;
-  var startMin = 0;
-  var endHour = 0;
-  var endMin = 0;
-
+  TextEditingController taskNameController = TextEditingController();
+  TextEditingController taskCategoryController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  // TextEditingController startTimeController = TextEditingController();
+  // TextEditingController endTimeController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   @override
   void initState() {
-    super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         context.read<Addtaskcontroller>().showalltasks();
       },
     );
+    super.initState();
   }
 
+  var startHour = 0;
+  var startMin = 0;
+  var endHour = 0;
+  var endMin = 0;
   @override
   Widget build(BuildContext context) {
     DateTime? _date;
@@ -50,6 +55,7 @@ class _AddtaskscreenState extends State<Addtaskscreen> {
                 height: 10,
               ),
               TextFormField(
+                controller: taskNameController,
                 decoration: InputDecoration(
                     hintText: "Task Name",
                     border: OutlineInputBorder(
@@ -66,6 +72,7 @@ class _AddtaskscreenState extends State<Addtaskscreen> {
                 height: 10,
               ),
               TextFormField(
+                controller: taskCategoryController,
                 decoration: InputDecoration(
                     hintText: "Category",
                     border: OutlineInputBorder(
@@ -82,7 +89,7 @@ class _AddtaskscreenState extends State<Addtaskscreen> {
                 height: 10,
               ),
               TextFormField(
-                controller: _dateController,
+                controller: dateController,
                 readOnly: true,
                 decoration: InputDecoration(
                     hintText: "Date",
@@ -97,7 +104,7 @@ class _AddtaskscreenState extends State<Addtaskscreen> {
                           final _formatteddate =
                               DateFormat("dd-MM-yyyy").format(_date!);
                           setState(() {
-                            _dateController.text = _formatteddate.toString();
+                            dateController.text = _formatteddate.toString();
                           });
                         },
                         icon: Icon(
@@ -133,6 +140,7 @@ class _AddtaskscreenState extends State<Addtaskscreen> {
                 height: 10,
               ),
               TextFormField(
+                controller: descriptionController,
                 minLines: 3,
                 maxLines: 5,
                 decoration: InputDecoration(
@@ -150,7 +158,17 @@ class _AddtaskscreenState extends State<Addtaskscreen> {
                               ColorConstants.primaryColor),
                           foregroundColor:
                               WidgetStatePropertyAll(ColorConstants.mainWhite)),
-                      onPressed: () {},
+                      onPressed: () async {
+                        Addtaskmodel data = Addtaskmodel(
+                            taskName: taskNameController.text,
+                            taskcategory: taskCategoryController.text,
+                            Date: dateController.text,
+                            startTime: "$startHour : $startMin",
+                            endTime: "$endHour : $endMin",
+                            description: descriptionController.text);
+                        await context.read<Addtaskcontroller>().AddTask(data);
+                        Navigator.pop(context);
+                      },
                       child: Text("Create Task")))
             ],
           ),
