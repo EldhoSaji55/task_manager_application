@@ -19,6 +19,7 @@ class Addtaskmodel {
       this.description});
 
   factory Addtaskmodel.fromMap(Map<String, dynamic> json) => Addtaskmodel(
+      id: json["id"],
       taskName: json["taskName"],
       taskcategory: json["taskcategory"],
       Date: json["Date"],
