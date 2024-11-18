@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager_application/controller/db_helper/db_helper.dart';
 import 'package:task_manager_application/controller/registrationController.dart/registrationController.dart';
 import 'package:task_manager_application/main.dart';
 import 'package:task_manager_application/model/userModel.dart';
@@ -28,7 +29,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
-        await context.read<Registrationcontroller>().initDb();
+        await DbHelper.getinstance.initDb();
         await context.read<Registrationcontroller>().showallUsers();
       },
     );

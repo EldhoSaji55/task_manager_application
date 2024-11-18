@@ -2,18 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:task_manager_application/controller/db_helper/db_helper.dart';
 import 'package:task_manager_application/model/userModel.dart';
 
 class Registrationcontroller with ChangeNotifier {
-  late Database database;
-  Future initDb() async {
-    database = await openDatabase("taskdb1.db", version: 1,
-        onCreate: (Database db, int version) async {
-      // When creating the db, create the table
-      await db.execute(
-          'CREATE TABLE Users(id INTEGER PRIMARY KEY, name TEXT, email TEXT, password TEXT, agreedTerms BOOLEAN)');
-    });
-  }
+  late Database database = DbHelper.getinstance.database;
 
   showallUsers() async {
     var allusers = await database.rawQuery('SELECT * FROM Users');

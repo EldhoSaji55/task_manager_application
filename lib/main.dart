@@ -20,7 +20,7 @@ class myApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => Registrationcontroller(),
-        )
+        ),
       ],
       child: MaterialApp(
         home: SplashScreen(),

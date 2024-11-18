@@ -2,22 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:task_manager_application/controller/db_helper/db_helper.dart';
 import 'package:task_manager_application/model/addtaskModel.dart';
 
 class Addtaskcontroller with ChangeNotifier {
-  late Database database;
-
+  late Database database = DbHelper.getinstance.database;
   var storedtasks;
-  Future initDb() async {
-    database = await openDatabase("taskdb1.db", version: 1,
-        onCreate: (Database db, int version) {
-      // When creating the db, create the table
-      db.execute(
-          'CREATE TABLE Task(id INTEGER PRIMARY KEY, user_id INTEGER, taskname TEXT, taskcategory TEXT, Date TEXT, startTime TEXT, endTime TEXT, description TEXT)');
-    });
-
-    notifyListeners();
-  }
 
   showalltasks() async {
     storedtasks = await database.rawQuery('SELECT * FROM Task');

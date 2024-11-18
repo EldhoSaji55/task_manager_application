@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager_application/controller/Add_task_Controller/addtaskController.dart';
+import 'package:task_manager_application/controller/db_helper/db_helper.dart';
 import 'package:task_manager_application/main.dart';
 import 'package:task_manager_application/utils/constants/color_constants.dart';
 import 'package:task_manager_application/view/bottomNavigationBar/bottomNavigationBar.dart';
@@ -23,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
-        await context.read<Addtaskcontroller>().initDb();
+        await DbHelper.getinstance.initDb();
       },
     );
   }
