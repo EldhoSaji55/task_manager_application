@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager_application/controller/db_helper/db_helper.dart';
 import 'package:task_manager_application/controller/registrationController.dart/registrationController.dart';
+import 'package:task_manager_application/utils/AppUtils/app_utils.dart';
 import 'package:task_manager_application/utils/constants/color_constants.dart';
 import 'package:task_manager_application/utils/constants/image_constants.dart';
+import 'package:task_manager_application/view/bottomNavigationBar/bottomNavigationBar.dart';
+import 'package:task_manager_application/view/home_screen/home_screen.dart';
 import 'package:task_manager_application/view/login_screen/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -62,12 +65,21 @@ class _SplashScreenState extends State<SplashScreen> {
                 style: ButtonStyle(
                     backgroundColor:
                         WidgetStatePropertyAll(ColorConstants.primaryColor)),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LoginScreen(),
-                      ));
+                onPressed: () async {
+                  String storedtoken = await AppUtils.getstoredAccessToken();
+                  if (storedtoken.isNotEmpty) {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Bottomnavigationbar(),
+                        ));
+                  } else {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginScreen(),
+                        ));
+                  }
                 },
                 child: SizedBox(
                   child: Center(

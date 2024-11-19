@@ -36,7 +36,7 @@ class Registrationcontroller with ChangeNotifier {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString("userId", result[0]['id'].toString());
       prefs.setString("email", result[0]['email'].toString());
-      log(result.toString());
+      log(prefs.toString());
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(

@@ -7,6 +7,10 @@ import 'package:task_manager_application/model/addtaskModel.dart';
 
 class Addtaskcontroller with ChangeNotifier {
   late Database database = DbHelper.getinstance.database;
+  String currentStartHour = "0";
+  String currentStartMin = "0";
+  String currentEndHour = "0";
+  String currentEndMin = "0";
   var storedtasks;
 
   showalltasks() async {
@@ -19,7 +23,7 @@ class Addtaskcontroller with ChangeNotifier {
     await database.rawInsert(
         'INSERT INTO Task(user_id,taskname, taskcategory, Date, startTime, endTime, description) VALUES(?,?, ?, ?, ?, ?, ?)',
         [
-          1,
+          taskmodel.user_id,
           taskmodel.taskName,
           taskmodel.taskcategory,
           taskmodel.Date,
@@ -28,5 +32,23 @@ class Addtaskcontroller with ChangeNotifier {
           taskmodel.description
         ]);
     await showalltasks();
+  }
+
+  Future updateStarttime({
+    required String startHour,
+    required String startMin,
+  }) async {
+    currentStartHour = startHour;
+    currentStartMin = startMin;
+
+    notifyListeners();
+  }
+
+  Future updateEndtime(
+      {required String endHour, required String endMinute}) async {
+    currentEndHour = endHour;
+    currentEndMin = endMinute;
+
+    notifyListeners();
   }
 }

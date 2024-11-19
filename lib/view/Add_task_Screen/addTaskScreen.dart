@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:task_manager_application/controller/Add_task_Controller/addtaskController.dart';
 import 'package:task_manager_application/main.dart';
 import 'package:task_manager_application/model/addtaskModel.dart';
+import 'package:task_manager_application/utils/AppUtils/app_utils.dart';
 import 'package:task_manager_application/utils/constants/color_constants.dart';
 import 'package:task_manager_application/view/global_widgets/ClockWidget.dart';
 
@@ -125,8 +126,14 @@ class _AddtaskscreenState extends State<Addtaskscreen> {
                     hour: startHour,
                     min: startMin,
                     title: "Start Time",
+                    startTime: true,
                   ),
-                  ClockWidget(hour: endHour, min: endMin, title: "End Time")
+                  ClockWidget(
+                    hour: endHour,
+                    min: endMin,
+                    title: "End Time",
+                    endTime: true,
+                  )
                 ],
               ),
               SizedBox(
@@ -159,12 +166,19 @@ class _AddtaskscreenState extends State<Addtaskscreen> {
                           foregroundColor:
                               WidgetStatePropertyAll(ColorConstants.mainWhite)),
                       onPressed: () async {
+                        final StartTime = context.read<Addtaskcontroller>();
+                        String storedtoken =
+                            await AppUtils.getstoredAccessToken();
+
                         Addtaskmodel data = Addtaskmodel(
+                            user_id: storedtoken,
                             taskName: taskNameController.text,
                             taskcategory: taskCategoryController.text,
                             Date: dateController.text,
-                            startTime: "$startHour : $startMin",
-                            endTime: "$endHour : $endMin",
+                            startTime:
+                                "${StartTime.currentStartHour} : ${StartTime.currentStartMin}",
+                            endTime:
+                                "${StartTime.currentEndHour} : ${StartTime.currentEndMin}",
                             description: descriptionController.text);
                         await context.read<Addtaskcontroller>().AddTask(data);
                         Navigator.pop(context);

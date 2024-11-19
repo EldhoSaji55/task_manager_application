@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:provider/provider.dart';
+import 'package:task_manager_application/controller/Add_task_Controller/addtaskController.dart';
+import 'package:task_manager_application/main.dart';
 import 'package:task_manager_application/utils/constants/color_constants.dart';
 
 class ClockWidget extends StatefulWidget {
-  ClockWidget(
-      {super.key, required this.hour, required this.min, required this.title});
+  ClockWidget({
+    super.key,
+    required this.hour,
+    required this.min,
+    required this.title,
+    this.startTime = false,
+    this.endTime = false,
+  });
 
   int hour;
   int min;
   String title;
+  bool startTime;
+  bool endTime;
 
   @override
   State<ClockWidget> createState() => _ClockWidgetState();
@@ -45,6 +56,15 @@ class _ClockWidgetState extends State<ClockWidget> {
                     onChanged: (value) {
                       setState(() {
                         widget.hour = value;
+                        if (widget.startTime == true) {
+                          context.read<Addtaskcontroller>().updateStarttime(
+                              startHour: widget.hour.toString(),
+                              startMin: widget.min.toString());
+                        } else if (widget.endTime == true) {
+                          context.read<Addtaskcontroller>().updateEndtime(
+                              endHour: widget.hour.toString(),
+                              endMinute: widget.min.toString());
+                        }
                       });
                     },
                     decoration: BoxDecoration(
@@ -77,6 +97,15 @@ class _ClockWidgetState extends State<ClockWidget> {
                     onChanged: (value) {
                       setState(() {
                         widget.min = value;
+                        if (widget.startTime == true) {
+                          context.read<Addtaskcontroller>().updateStarttime(
+                              startHour: widget.hour.toString(),
+                              startMin: widget.min.toString());
+                        } else if (widget.endTime == true) {
+                          context.read<Addtaskcontroller>().updateEndtime(
+                              endHour: widget.hour.toString(),
+                              endMinute: widget.min.toString());
+                        }
                       });
                     },
                     decoration: BoxDecoration(
