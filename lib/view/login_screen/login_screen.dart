@@ -17,6 +17,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 15,
                 ),
                 TextFormField(
+                  controller: emailController,
                   decoration: InputDecoration(
                       label: Text("Email"), border: OutlineInputBorder()),
                 ),
@@ -58,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 15,
                 ),
                 TextFormField(
+                  controller: passwordController,
                   decoration: InputDecoration(
                       label: Text("Password"), border: OutlineInputBorder()),
                 ),
@@ -79,12 +83,13 @@ class _LoginScreenState extends State<LoginScreen> {
               style: ButtonStyle(
                   backgroundColor:
                       WidgetStatePropertyAll(ColorConstants.primaryColor)),
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Bottomnavigationbar(),
-                    ));
+              onPressed: () async {
+                await context.read<Registrationcontroller>().loginUser(
+                    mail: emailController.text,
+                    password: passwordController.text,
+                    context: context);
+                emailController.clear();
+                passwordController.clear();
               },
               child: SizedBox(
                 height: 50,

@@ -1,10 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_manager_application/controller/db_helper/db_helper.dart';
+import 'package:task_manager_application/controller/registrationController.dart/registrationController.dart';
 import 'package:task_manager_application/utils/constants/color_constants.dart';
 import 'package:task_manager_application/utils/constants/image_constants.dart';
 import 'package:task_manager_application/view/login_screen/login_screen.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) async {
+        await DbHelper.getinstance.initDb();
+        await context.read<Registrationcontroller>().showallUsers();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

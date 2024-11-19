@@ -25,17 +25,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) async {
-        await DbHelper.getinstance.initDb();
-        await context.read<Registrationcontroller>().showallUsers();
-      },
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
