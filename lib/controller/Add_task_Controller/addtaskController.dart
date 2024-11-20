@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:task_manager_application/controller/db_helper/db_helper.dart';
@@ -51,4 +50,6 @@ class Addtaskcontroller with ChangeNotifier {
 
     notifyListeners();
   }
+
+  upcomingTasks() {}
 }

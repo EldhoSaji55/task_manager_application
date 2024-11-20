@@ -9,6 +9,7 @@ import 'package:task_manager_application/utils/constants/color_constants.dart';
 import 'package:task_manager_application/view/bottomNavigationBar/bottomNavigationBar.dart';
 import 'package:task_manager_application/view/global_widgets/overlappingCircleAvatarWidget.dart';
 import 'package:task_manager_application/view/home_screen/widgets/CompletedTaskWidget.dart';
+import 'package:task_manager_application/view/task_Details_Screen/task_detailsScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -168,25 +169,34 @@ class _HomeScreenState extends State<HomeScreen> {
             height: MediaQuery.of(context).size.height * 0.4,
             child: ListView.separated(
                 physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => ListTile(
-                      leading: Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://logowik.com/content/uploads/images/google-tasks7052.logowik.com.webp"))),
-                      ),
-                      title: Text("UI Designing"),
-                      subtitle: Text(
-                        "09:00 AM - 11:00AM",
-                        style: TextStyle(
-                            fontSize: 13, color: ColorConstants.Maingrey),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        color: ColorConstants.Maingrey,
-                        size: 18,
+                itemBuilder: (context, index) => InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TaskDetailsscreen(),
+                            ));
+                      },
+                      child: ListTile(
+                        leading: Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                      "https://logowik.com/content/uploads/images/google-tasks7052.logowik.com.webp"))),
+                        ),
+                        title: Text("UI Designing"),
+                        subtitle: Text(
+                          "09:00 AM - 11:00AM",
+                          style: TextStyle(
+                              fontSize: 13, color: ColorConstants.Maingrey),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_forward_ios,
+                          color: ColorConstants.Maingrey,
+                          size: 18,
+                        ),
                       ),
                     ),
                 separatorBuilder: (context, index) => SizedBox(

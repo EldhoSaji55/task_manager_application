@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager_application/utils/AppUtils/app_utils.dart';
 import 'package:task_manager_application/utils/constants/color_constants.dart';
+import 'package:task_manager_application/view/login_screen/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -138,18 +140,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 SizedBox(
                   height: 10,
                 ),
-                ListTile(
-                  leading: Icon(
-                    Icons.logout_rounded,
-                    color: ColorConstants.red,
-                  ),
-                  title: Text(
-                    "Log Out",
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: ColorConstants.Maingrey,
+                InkWell(
+                  onTap: () {
+                    AppUtils.removeuser();
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.logout_rounded,
+                      color: ColorConstants.red,
+                    ),
+                    title: Text(
+                      "Log Out",
+                      style:
+                          TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      color: ColorConstants.Maingrey,
+                    ),
                   ),
                 ),
               ],
